@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./style.css" type="text/css" rel="stylesheet" />
+    <script type="module" src="./index.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="bg-orange-900 p-5">
+        <a href="index.html">
+          <button class="cursor-pointer p-5 rounded-2xl outline-0 bg-amber-500 text-xl text-orange-900 font-bold flex items-center justify-between gap-5">
+            <i data-lucide="move-left" class="w-5 h-5 text-amber-800" stroke-width="5"></i> go back
+          </button>
+        </a>
+    </div>
+    <div class="w-full h-11/12 bg-orange-900 flex items-center justify-center flex-col gap-10">
+        <div class="flex items-center justify-center gap-20">
+            <p class="flex justify-between items-center text-5xl text-amber-500 font-bold">player 1 (<i data-lucide="X" class="w-10 h-10 text-amber-500" stroke-width="5"></i>)</p>
+            <p class="flex justify-between items-center text-5xl text-amber-500 font-bold">VS</p>
+            <p class="flex justify-between items-center text-5xl text-amber-500 font-bold">player 2 (<i data-lucide="Circle" class="w-10 h-10 text-amber-500" stroke-width="5"></i>)</p>
+        </div>
+        <div>
+            <p id="turnMessage" class="flex text-xl text-amber-500 font-bold">i'ts player1</p>
+        </div>
+        <div id="box" class="grid grid-cols-[repeat(3,1fr)] grid-rows-[repeat(3,1fr)] gap-y-2.5 gap-x-2.5 w-fit h-fit rounded-4xl">
+            <div id="1" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50 rounded-tl-2xl"></div>
+            <div id="2" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50"></div>
+            <div id="3" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50 rounded-tr-2xl"></div>
+            <div id="4" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50"></div>
+            <div id="5" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50"></div>
+            <div id="6" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50"></div>
+            <div id="7" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50 rounded-bl-2xl"></div>
+            <div id="8" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50"></div>
+            <div id="9" class="bg-amber-800 flex items-center justify-center cursor-pointer w-50 h-50 rounded-br-2xl"></div>
+        </div>
+    </div>
+</body>
+</html>

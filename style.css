@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+html {
+  color-scheme: light dark;
+  font-family: system-ui;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+body {
+  color-scheme: light dark;
+  font-family: system-ui;
+  background-color: #7e2a0c;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}

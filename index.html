@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./style.css" type="text/css" rel="stylesheet" />
+    <script type="module" src="./index.js" defer></script>
+  </head>
+  <body>
+    <div style="height: 100vh;">
+
+      <div class="w-full h-full bg-orange-900 flex items-center justify-center flex-col gap-20">
+        <h1 class="text-9xl font-bold text-amber-500">Tic Tac Toe</h1>
+
+        <div class="flex justify-between items-center gap-5">
+          <div class="w-50 h-50 bg bg-amber-500 rounded-2xl flex items-center justify-center" style="font-size: 50px;">
+            <i data-lucide="X" class="w-35 h-35 text-orange-900" stroke-width="5"></i>  
+          </div>
+          <div class="w-50 h-50 bg bg-orange-900 rounded-2xl flex items-center justify-center" style="font-size: 50px;">
+            <i data-lucide="Circle" class="w-35 h-35 text-amber-500" stroke-width="5"></i>  
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-10">
+          <a href="./localGame.html"><button class="cursor-pointer p-5 rounded-2xl outline-0 bg-amber-500 text-4xl text-orange-900 font-bold">play local</button></a>
+          <a href="./remoteGame.html"><button class="cursor-pointer p-5 rounded-2xl outline-0 bg-amber-500 text-4xl text-orange-900 font-bold">play remote</button></a>
+        </div>
+
+        
+      </div>
+
+    </div>
+
+  </body>
+</html>
