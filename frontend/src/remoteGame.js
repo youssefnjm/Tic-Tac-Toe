@@ -14,9 +14,10 @@ form.addEventListener("submit", (e) => {
 
     socket.emit("searchOpponent", username);
     socket.on("opponentFound", (res) => {
-        console.log(res);
+        console.log("opponentFound", res);
         localStorage.setItem("gameStarted", "true");
     });
+    
     waitAlert();
 
     console.log(username);

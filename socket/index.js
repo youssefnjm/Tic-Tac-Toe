@@ -36,35 +36,33 @@ io.on("connection", (socket) => {
         console.log(onlignUser);
     });
 
-    socket.on("searchOpponent", (username) => {
-        if (!username || onlignUser.length <= 1) return;
-
-        let currentGame;
-        
-        const intervalId = setInterval(() => {
-            onlignUser.map((ele) => {
-                if (ele.inGame === false || ele.username !== username) {
-                    ele.inGame = true;
-                    const currentUser = onlignUser.find((ele) => ele.username === username);
-                    currentUser.inGame = true;
-    
-                    currentGame = playedGames.find((ele) => ele.player1 === username || ele.player2 === username);
-                    if (!currentGame) {
-                        currentGame = {
-                            player1: username,
-                            player2: ele.username,
-                        }
-                        playedGames.push(currentGame);
-                    };
-
-                    clearInterval(intervalId);
-                }
-            });
-        }, 500);
-
-        io.to(socket.id).emit("opponentFound", { messages: "opponent found!!!", currentGame });
-    
-    });
+    socket.on("searchOpponent", () => {
+        const currentUser = onlignUser.find(
+          (user) => user.socketId === socket.id
+        );
+      
+        if (!currentUser || currentUser.inGame) return;
+      
+        const opponent = onlignUser.find(
+          (opennet) => opennet.inGame === false && opennet.socketId !== socket.id
+        );
+      
+        if (!opponent) return ;
+      
+        currentUser.inGame = true;
+        opponent.inGame = true;
+      
+        const game = {
+          player1: currentUser.username,
+          player2: opponent.username,
+        };
+      
+        playedGames.push(game);
+      
+        io.to(currentUser.socketId).emit("opponentFound", game);
+        io.to(opponent.socketId).emit("opponentFound", game);
+      });
+      
 
     io.on("disconnect", () => {
         console.log("🔴 Socket disconnected:", socket.id);

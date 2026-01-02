@@ -43,7 +43,6 @@ const waitAlert = () => {
     });
 
     const interval = setInterval(() => {
-        console.log(localStorage.getItem("gameStarted"));
         if (localStorage.getItem("gameStarted") === "true") {
           clearInterval(interval);
           Swal.close();
