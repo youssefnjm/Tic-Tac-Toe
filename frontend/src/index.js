@@ -1,6 +1,8 @@
 import { createIcons, X, Circle, createElement, MoveLeft, User } from 'lucide';
 import Swal from 'sweetalert2';
 import { io } from "socket.io-client"
+let socket = null;
+let gameStarted = false;
 
 createIcons({
     icons: {
@@ -28,122 +30,34 @@ const sweetAlert = (winner) => {
     }).then(() => window.location.reload());
 };
 
-
-let turn = "player1"
-let arr = Array(9);
-
-const notifyTheTurn = (turn) => {
-    const turnMessage = document.getElementById("turnMessage");
-    let message = `i'ts ${turn} turn`
-    turnMessage.innerText = message;
-};
-
-const Isfinish = (winner) => {
-    const winPossibilities = [
-        // rows
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        
-        // columns
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        
-        // diagonals
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-
-    winPossibilities.map((ele) => {
-        if (arr[ele[0]] !== undefined && arr[ele[1]] !== undefined && !arr[ele[0]] !== undefined) {
-            if (arr[ele[0]] === arr[ele[1]] && arr[ele[2]] === arr[ele[0]]) {
-                sweetAlert(winner);
-                return ;
-            }
+const waitAlert = () => {
+    Swal.fire({
+        title: "searching for opponent!",
+        html: "<p>don't close the window<p/>",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
         }
     });
 
-    if (turn === "player1")
-        notifyTheTurn("player2");
-    else
-        notifyTheTurn("player1");
-};
-
-
-
-if (document.location.pathname === "/localGame.html")
-{
-    const box = document.getElementById("box");
-    
-    for (const child of box.children) {
-        child.addEventListener("click", () => {
-    
-            console.log(child.getAttribute("id"));
-    
-            if (child.childElementCount === 0) {
-                if (turn === "player1") {
-                    child.appendChild(XIcon.cloneNode(true));
-                    
-                    arr[(child.getAttribute("id") - 1)] = "X";
-                    Isfinish("player2");
-                    
-                    turn = "player2";
-                } else {
-                    child.appendChild(CircleIcon.cloneNode(true));
-    
-                    arr[(child.getAttribute("id") - 1)] = "O";
-                    Isfinish("player1");
-    
-                    turn = "player1";
-                }
-            }
-    
-        });
-    };       
+    const interval = setInterval(() => {
+        console.log(localStorage.getItem("gameStarted"));
+        if (localStorage.getItem("gameStarted") === "true") {
+          clearInterval(interval);
+          Swal.close();
+        }
+    }, 200);
 }
 
-if (document.location.pathname === "/remoteGame.html") {
-
-    const form = document.getElementById("form");
-
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const username = document.getElementById("username").value;
-
-        const socket = io("http://localhost:3000");
-
-        socket.emit("addNewUser", username);
-
-        socket.emit("searchOpponent", username);
-
-        console.log(username.value);
-    });
-
-    // for (const child of box.children) {
-    //     child.addEventListener("click", () => {
-    
-    //         console.log(child.getAttribute("id"));
-    
-    //         if (child.childElementCount === 0) {
-    //             if (turn === "player1") {
-    //                 child.appendChild(XIcon.cloneNode(true));
-                    
-    //                 arr[(child.getAttribute("id") - 1)] = "X";
-    //                 Isfinish("player2");
-                    
-    //                 turn = "player2";
-    //             } else {
-    //                 child.appendChild(CircleIcon.cloneNode(true));
-    
-    //                 arr[(child.getAttribute("id") - 1)] = "O";
-    //                 Isfinish("player1");
-    
-    //                 turn = "player1";
-    //             }
-    //         }
-    
-    //     });
-    // };
-
+if (!socket) {
+    socket = io("http://localhost:3000");
+    const username = localStorage.getItem("username");
+    if (username) {
+        socket.disconnect();
+        localStorage.clear();
+    }
 }
+
+export { XIcon, CircleIcon, sweetAlert, waitAlert, socket, io, gameStarted };

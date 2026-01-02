@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" type="text/css" rel="stylesheet" />
-    <script type="module" src="./index.js" defer></script>
+    <script type="module" src="./remoteGame.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -20,14 +20,16 @@
 
     <div class="m-10">
         <form action="" id="form">
-            <div class="flex items-center justify-center gap-5">
-                <label for="username" class="text-xl text-amber-500 font-bold">entre username: </label>
-                <div class="flex flex-row gap-1 bg-white/80 text-black rounded-md py-1 px-1 w-fit">
-                    <i data-lucide="User" class="w-5 h-5 text-amber-500" stroke-width="4"></i>
-                    <input id="username" name="" type="text" class="bg-inherit focus:outline-none pl-1" />
+            <div class="flex flex-col w-fit h-fit gap-10 m-auto">
+                <div class="flex items-center justify-center gap-5">
+                    <label for="username" class="text-xl text-amber-500 font-bold">entre username: </label>
+                    <div class="flex flex-row gap-1 bg-white/80 text-black rounded-md py-1 px-1 w-fit">
+                        <i data-lucide="User" class="w-5 h-5 text-amber-500" stroke-width="4"></i>
+                        <input id="username" name="" type="text" class="bg-inherit focus:outline-none pl-1" />
+                    </div>
                 </div>
+                <button class="cursor-pointer p-5 rounded-2xl outline-0 bg-amber-500 text-xl text-orange-900 font-bold text-center">Search for a game</button>
             </div>
-  
         </form>
     </div>
     
