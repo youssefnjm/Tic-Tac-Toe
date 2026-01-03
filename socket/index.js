@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
         const game = {
           player1: currentUser,
           player2: opponent,
+        //   arr: Array(9).fill(0),
         };
       
         playedGames.push(game);
@@ -75,12 +76,10 @@ io.on("connection", (socket) => {
         console.log("\n-------------------------setMove", opponent, currentUser, cardId);
 
         if (opponent) {
-            io.to(opponent.socketId).emit("getMove", cardId);
+            io.to(opponent.socketId).emit("getMove", cardId, opponent);
             io.to(opponent.socketId).emit("changeTurn", opponent);
             io.to(currentUser.socketId).emit("changeTurn", opponent);
         }
-
-        
     });
     
     socket.on("setWinner", (game, winner) => {
@@ -88,7 +87,6 @@ io.on("connection", (socket) => {
         io.to(game.player1.socketId).emit("braodCastWinner", winner);
         io.to(game.player2.socketId).emit("braodCastWinner", winner);
     });
-
 
     io.on("disconnect", () => {
         console.log("🔴 Socket disconnected:", socket.id);
