@@ -1,7 +1,7 @@
 import { createIcons, X, Circle, createElement, MoveLeft, User } from 'lucide';
 import Swal from 'sweetalert2';
-import { io } from "socket.io-client"
-let socket = null;
+
+// let socket = null;
 let gameStarted = false;
 
 createIcons({
@@ -50,13 +50,5 @@ const waitAlert = () => {
     }, 200);
 }
 
-if (!socket) {
-    socket = io("http://localhost:3000");
-    const username = localStorage.getItem("username");
-    if (username) {
-        socket.disconnect();
-        localStorage.clear();
-    }
-}
 
-export { XIcon, CircleIcon, sweetAlert, waitAlert, socket, io, gameStarted };
+export { XIcon, CircleIcon, sweetAlert, waitAlert, gameStarted };

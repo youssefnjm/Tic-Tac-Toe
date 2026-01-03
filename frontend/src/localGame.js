@@ -1,4 +1,4 @@
-import { XIcon, CircleIcon, sweetAlert, socket, io } from "./index.js";
+import { XIcon, CircleIcon, sweetAlert } from "./index.js";
 
 let turn = "player1";
 let arr = Array(9);
@@ -7,7 +7,7 @@ const box = document.getElementById("box");
 
 const username = localStorage.getItem("username");
 if (username) {
-    socket.emit("disconnect", username);
+    // socket.emit("disconnect", username);
     localStorage.clear();
 }
 
@@ -42,7 +42,6 @@ const Isfinish = (winner) => {
         turnMessage.innerText = message;
     }
 };
-
 
 for (const child of box.children) {
     child.addEventListener("click", () => {

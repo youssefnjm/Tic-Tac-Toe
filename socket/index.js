@@ -29,11 +29,12 @@ io.on("connection", (socket) => {
             onlignUser.push({
                 socketId: socket.id,
                 username: username,
+                playWith: '',
                 inGame: false,
             });
         }
         
-        console.log(onlignUser);
+        console.log("\n-------------------------addNewUser", onlignUser);
     });
 
     socket.on("searchOpponent", () => {
@@ -50,26 +51,51 @@ io.on("connection", (socket) => {
         if (!opponent) return ;
       
         currentUser.inGame = true;
+        currentUser.playWith = 'X';
         opponent.inGame = true;
+        opponent.playWith = 'O';
       
         const game = {
-          player1: currentUser.username,
-          player2: opponent.username,
+          player1: currentUser,
+          player2: opponent,
         };
       
         playedGames.push(game);
+
+        console.log("\n-------------------------searchOpponent", game);
       
         io.to(currentUser.socketId).emit("opponentFound", game);
         io.to(opponent.socketId).emit("opponentFound", game);
-      });
+    });
       
+    socket.on("setMove", (player, game, cardId) => {
+        const opponent = game.player1.username !== player ? game.player1 : game.player2;
+        const currentUser = game.player1.username === player ? game.player1 : game.player2;
+
+        console.log("\n-------------------------setMove", opponent, currentUser, cardId);
+
+        if (opponent) {
+            io.to(opponent.socketId).emit("getMove", cardId);
+            io.to(opponent.socketId).emit("changeTurn", opponent);
+            io.to(currentUser.socketId).emit("changeTurn", opponent);
+        }
+
+        
+    });
+    
+    socket.on("setWinner", (game, winner) => {
+        console.log("\n-------------------------setWinner", game);
+        io.to(game.player1.socketId).emit("braodCastWinner", winner);
+        io.to(game.player2.socketId).emit("braodCastWinner", winner);
+    });
+
 
     io.on("disconnect", () => {
         console.log("🔴 Socket disconnected:", socket.id);
         onlignUser = onlignUser.filter((ele) => {
             return (ele.socketId !== socket.id);
         });
-        console.log(`is disconnected`, onlignUser);
+        console.log(`\n-------------------------is disconnected`, onlignUser);
     });
 });
 
