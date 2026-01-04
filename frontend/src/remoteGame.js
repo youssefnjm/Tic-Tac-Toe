@@ -27,7 +27,6 @@ const show = () => {
     if (line) console.log(line);
 };
 
-
 const Isfinish = (winner, game) => {
     const winPossibilities = [
         [0, 1, 2],
@@ -42,7 +41,7 @@ const Isfinish = (winner, game) => {
         [2, 4, 6],
     ];
 
-    winPossibilities.map((ele) => {
+    winPossibilities.forEach((ele) => {
         if (arr[ele[0]] !== '0' && arr[ele[1]] !== '0' && !arr[ele[2]] !== '0') {
             if (arr[ele[0]] === arr[ele[1]] && arr[ele[2]] === arr[ele[0]]) {
                 console.log(`${arr[ele[0]]} === ${arr[ele[1]]} && ${arr[ele[2]]} === ${arr[ele[0]]}`);
@@ -56,15 +55,18 @@ const Isfinish = (winner, game) => {
 
 const form = document.getElementById("form");
 let game = {};
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     socket = io("http://localhost:3000");
-    
     if (!socket) return ;
 
     const username = document.getElementById("username").value;
     if (username && username.length !== 0) {
+
         localStorage.setItem("username", username);
+
         // add to onlineUsers
         socket.emit("addNewUser", username);
     
@@ -96,7 +98,8 @@ form.addEventListener("submit", (e) => {
 
             // get Opponent move
             socket.on("getMove", (cardId, opponent) => {
-                console.log("getMove", opponent);
+                console.log("################## getMove :", opponent, currentUser);
+                // console.log(opponent, currentUser);
                 const card = document.getElementById(cardId);
 
                 arr[cardId - 1] = opponent.playWith;

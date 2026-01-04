@@ -25,7 +25,7 @@ const Isfinish = (winner) => {
         [2, 4, 6],
     ];
 
-    winPossibilities.map((ele) => {
+    winPossibilities.forEach((ele) => {
         if (arr[ele[0]] !== undefined && arr[ele[1]] !== undefined && !arr[ele[0]] !== undefined) {
             if (arr[ele[0]] === arr[ele[1]] && arr[ele[2]] === arr[ele[0]]) {
                 sweetAlert(winner);

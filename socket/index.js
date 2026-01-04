@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
         console.log("\n-------------------------setMove", opponent, currentUser, cardId);
 
         if (opponent) {
-            io.to(opponent.socketId).emit("getMove", cardId, opponent);
+            io.to(opponent.socketId).emit("getMove", cardId, currentUser);
             io.to(opponent.socketId).emit("changeTurn", opponent);
             io.to(currentUser.socketId).emit("changeTurn", opponent);
         }
