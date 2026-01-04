@@ -22,10 +22,10 @@ const CircleIcon = createElement(Circle, {
     'stroke-width': 3,
 });
 
-const sweetAlert = (winner) => {
+const sweetAlert = (msg, flag) => {
     Swal.fire({
-        title: `congrats ${winner} win!`,
-        icon: "success",
+        title: msg,
+        icon: flag ? "success" : "fail",
         draggable: true
     }).then(() => window.location.reload());
 };

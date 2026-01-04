@@ -7,7 +7,7 @@ const playedGames = [];
 const httpServer = createServer();
 const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:1234",
+      origin: "*",
       credentials: true,
     },
 });
@@ -83,7 +83,13 @@ io.on("connection", (socket) => {
     });
     
     socket.on("setWinner", (game, winner) => {
-        console.log("\n-------------------------setWinner", game);
+        // console.log("\n-------------------------setWinner", game);
+        playedGames = game.filter((ele) => {
+            return (ele.player1.username !== game.player1.username && ele.player2.username !== game.player2.username);
+        });
+
+        console.log(playedGames);
+
         io.to(game.player1.socketId).emit("braodCastWinner", winner);
         io.to(game.player2.socketId).emit("braodCastWinner", winner);
     });
@@ -98,6 +104,6 @@ io.on("connection", (socket) => {
 });
 
 
-httpServer.listen(3000, () => {
+httpServer.listen(3000, "0.0.0.0", () => {
     console.log("server is running in http://localhost:3000");
 });

@@ -41,6 +41,7 @@ const Isfinish = (winner, game) => {
         [2, 4, 6],
     ];
 
+    // check winner
     winPossibilities.forEach((ele) => {
         if (arr[ele[0]] !== '0' && arr[ele[1]] !== '0' && !arr[ele[2]] !== '0') {
             if (arr[ele[0]] === arr[ele[1]] && arr[ele[2]] === arr[ele[0]]) {
@@ -50,6 +51,17 @@ const Isfinish = (winner, game) => {
             }
         }
     });
+    
+    // check draw
+    let draw = false
+    winPossibilities.forEach((ele) => {
+        if (arr[ele[0]] === '0' || arr[ele[1]] === '0' || !arr[ele[2]] === '0') {
+            draw = true;
+            return;
+        }
+    });
+    if (draw)
+        socket.emit("setWinner", game, "draw");
 };
 
 
@@ -58,8 +70,7 @@ let game = {};
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    socket = io("http://localhost:3000");
+    socket = io(`http://10.13.3.1:3000`);
     if (!socket) return ;
 
     const username = document.getElementById("username").value;
@@ -98,8 +109,6 @@ form.addEventListener("submit", (e) => {
 
             // get Opponent move
             socket.on("getMove", (cardId, opponent) => {
-                console.log("################## getMove :", opponent, currentUser);
-                // console.log(opponent, currentUser);
                 const card = document.getElementById(cardId);
 
                 arr[cardId - 1] = opponent.playWith;
@@ -113,9 +122,13 @@ form.addEventListener("submit", (e) => {
 
             // finish the game
             socket.on("braodCastWinner", (winner) => { 
-                console.log(winner);
                 socket.disconnect();
-                sweetAlert(winner);
+                if (winner === currentUser.username)
+                    sweetAlert(`you both draw`, 1);
+                else if (winner === currentUser.username)
+                    sweetAlert(`congrats you win`, 1);
+                else
+                    sweetAlert(`you lose`, 0);
             });
 
             // game logic

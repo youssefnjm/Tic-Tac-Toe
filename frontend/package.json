@@ -5,6 +5,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel src/index.html --cache-dir .cache",
+    "startRemote": "npx parcel src/index.html --host 0.0.0.0 --port 1234",
     "devNoCach": "npx parcel src/index.html --no-cache",
     "clearCache": "rm -rf .cache .parcel-cache dist",
     "build": "parcel build"

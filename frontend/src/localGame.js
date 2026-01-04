@@ -34,7 +34,17 @@ const Isfinish = (winner) => {
         }
     });
 
-    if (turn === "player1") {
+    let draw = false
+    winPossibilities.forEach((ele) => {
+        if (arr[ele[0]] === '0' || arr[ele[1]] === '0' || !arr[ele[2]] === '0') {
+            draw = true;
+            return;
+        }
+    });
+    if (draw) {
+        let message = `i'ts draw`;
+        turnMessage.innerText = message;        
+    } else if (turn === "player1") {
         let message = `i'ts player2 turn`;
         turnMessage.innerText = message;
     } else {
